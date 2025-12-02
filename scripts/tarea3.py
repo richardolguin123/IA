@@ -11,7 +11,7 @@ import os
 BATCH_SIZE = 32
 IMG_SIZE = 64
 LEARNING_RATE = 0.001
-SEED = 42  # Semilla para reproducibilidad (importante para la nota)
+SEED = 42  # Semilla para reproducibilidad 
 
 # Fijamos la semilla en CPU y GPU
 torch.manual_seed(SEED)
@@ -30,14 +30,12 @@ data_transforms = transforms.Compose([
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
 ])
 
-# Ruta relativa: Asumimos que estás ejecutando desde 'IA/scripts' o 'IA'
-# Buscamos la carpeta Imagenes subiendo un nivel si es necesario
 if os.path.exists('../Imagenes'):
     data_dir = '../Imagenes'
-elif os.path.exists('IA/Imagenes'): # Por si ejecutas desde fuera
+elif os.path.exists('IA/Imagenes'):
     data_dir = 'IA/Imagenes'
 else:
-    # Ajusta esto si tu carpeta tiene otro nombre
+
     data_dir = './Imagenes' 
 
 try:
