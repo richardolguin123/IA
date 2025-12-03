@@ -7,9 +7,8 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, random_split
 import os
 
-# ==========================================
 # 1. Configuración y Hiperparámetros
-# ==========================================
+
 
 BATCH_SIZE = 32
 IMG_SIZE = 64
@@ -22,9 +21,8 @@ if torch.cuda.is_available():
     torch.cuda.manual_seed(SEED)
 
 
-# ==========================================
 # 2. Preparación de Datos
-# ==========================================
+
 
 print("--- Preparando Datos ---")
 
@@ -68,11 +66,10 @@ val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
 test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
 
-# ==========================================
 # 3. Arquitecturas CNN
-# ==========================================
 
-# --- MODELO 1: BASE (El que ya probaste) ---
+
+#MODELO 1: BASE 
 class SatelliteCNN(nn.Module):
     def __init__(self, num_classes=5):
         super(SatelliteCNN, self).__init__()
@@ -104,7 +101,7 @@ class SatelliteCNN(nn.Module):
         x = self.fc2(x)
         return x
 
-# --- MODELO 2: CON DROPOUT (NUEVO PARA PARTE 2) ---
+# --- MODELO 2: CON DROPOUT (PARTE 2) ---
 class SatelliteCNNDropout(nn.Module):
     def __init__(self, num_classes=5):
         super(SatelliteCNNDropout, self).__init__()
@@ -127,9 +124,6 @@ class SatelliteCNNDropout(nn.Module):
         self.fc1 = nn.Linear(128 * 8 * 8, 512)
         self.relu_fc = nn.ReLU()
         
-        # -------------------------------------------------------
-        # AQUÍ ESTÁ EL CAMBIO IMPORTANTE: DROPOUT
-        # -------------------------------------------------------
         # Apagamos aleatoriamente el 50% de las neuronas en cada paso de entrenamiento
         self.dropout = nn.Dropout(p=0.5) 
         
@@ -150,9 +144,9 @@ class SatelliteCNNDropout(nn.Module):
         return x
 
 
-# ==========================================
+# ======
 # 4. Funciones de Entrenamiento
-# ==========================================
+
 
 def train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=10):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -232,17 +226,11 @@ def plot_training_curves(history, filename='curvas_entrenamiento.png', title_suf
     print(f"📈 Gráfico guardado como '{filename}'")
     plt.show()
 
-# ==========================================
-# 5. Ejecución Principal
-# ==========================================
+# Ejecución Principal
+
 
 if __name__ == "__main__":
-    # NOTA: He comentado el entrenamiento del modelo base para ahorrar tiempo
-    # y pasar directo a la Parte 2 (Dropout).
-    
-    # ---------------------------------------------------------
-    # EJECUCIÓN PARTE 2: MODELO CON DROPOUT
-    # ---------------------------------------------------------
+   
     print("\n--- 🏗️ Entrenando Modelo CON Dropout (Parte 2) ---")
     
     # Instanciamos la NUEVA clase
